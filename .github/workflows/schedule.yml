@@ -2,7 +2,7 @@ name: Run Daily Script
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # 毎日9時（UTCの0時）
+    - cron: '0 23 * * *'  # 毎日8時（日本時間）
   workflow_dispatch:
 
 jobs:
