@@ -2,7 +2,7 @@ name: Run Daily Script
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # UTC 0時 = 日本9時
+    - cron: '0 0 * * *'  # 毎日9時（UTCの0時）
   workflow_dispatch:
 
 jobs:
@@ -10,11 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
+
       - name: Install dependencies
-        run: pip install requests  # ← この行を追加！
+        run: |
+          pip install requests python-dotenv google-analytics-data google-auth
+
       - name: Run script
         run: python daily_report.py
