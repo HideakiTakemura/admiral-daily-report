@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 from google.analytics.data_v1beta import BetaAnalyticsDataClient
 from google.analytics.data_v1beta.types import DateRange, Metric, RunReportRequest
 from google.oauth2 import service_account
-
+import json
 
 
 load_dotenv()
@@ -24,12 +24,13 @@ MAIL_TO = os.getenv("MAIL_TO")
 MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
 
 # GA4設定
-GA_KEY_PATH = "ga4-key.json"
+
 GA_PROPERTY_ID = "316809848"
+ga_key_json = os.getenv("GA4_KEY_JSON")  # ← Secretsから読み込み
+credentials = service_account.Credentials.from_service_account_info(json.loads(ga_key_json))
 
 # === GA4 セッション数取得 ===
 def get_ga_sessions(start_date, end_date):
-    credentials = service_account.Credentials.from_service_account_file(GA_KEY_PATH)
     client = BetaAnalyticsDataClient(credentials=credentials)
     request = RunReportRequest(
         property=f"properties/{GA_PROPERTY_ID}",
@@ -38,6 +39,7 @@ def get_ga_sessions(start_date, end_date):
     )
     response = client.run_report(request)
     return int(response.rows[0].metric_values[0].value)
+
 
 # === Shopify売上と注文数取得（ページネーション対応）===
 def get_shopify_sales(date_from: str, date_to: str):
