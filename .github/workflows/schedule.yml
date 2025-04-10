@@ -22,3 +22,10 @@ jobs:
 
       - name: Run script
         run: python daily_report.py
+        env:
+          SHOPIFY_SHOP_NAME: ${{ secrets.SHOPIFY_SHOP_NAME }}
+          SHOPIFY_ACCESS_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+          MAIL_FROM: ${{ secrets.MAIL_FROM }}
+          MAIL_TO: ${{ secrets.MAIL_TO }}
+          MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
+          GA4_KEY_JSON: ${{ secrets.GA4_KEY_JSON }}
