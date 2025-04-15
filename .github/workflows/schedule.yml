@@ -1,9 +1,8 @@
 name: Run Daily Script
 
 on:
-  schedule:
-    - cron: '0 23 * * *'  # 毎日8時（日本時間）
-  workflow_dispatch:
+  workflow_dispatch:  # 手動実行だけ許す
+
 
 jobs:
   run-script:
